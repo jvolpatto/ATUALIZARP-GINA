@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualizar Página</title>
+    <title>Atualizar Todas as Abas</title>
 </head>
 <body>
-    <button onclick="atualizarPagina()">ENVIAR</button>
+    <button onclick="atualizarTodasAsAbas()">ENVIAR</button>
 
     <script>
-        function atualizarPagina() {
-            location.reload();
+        // Cria um canal de comunicação
+        const canalAtualizacao = new BroadcastChannel('atualizar_abas');
+
+        // Função para atualizar todas as abas
+        function atualizarTodasAsAbas() {
+            // Envia a mensagem de atualização para todas as abas
+            canalAtualizacao.postMessage('atualizar');
         }
+
+        // Recebe a mensagem de atualização e recarrega a página
+        canalAtualizacao.onmessage = (event) => {
+            if (event.data === 'atualizar') {
+                location.reload();
+            }
+        };
     </script>
 </body>
 </html>
+
